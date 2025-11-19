@@ -4,7 +4,7 @@ export default function AppointmentList({ items = [], onDelete, onEdit }) {
   if (items.length === 0) return <div>Keine Termine</div>
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {items.map((it) => (
         <div key={it._id} className="card bg-base-100 shadow">
           <div className="card-body">

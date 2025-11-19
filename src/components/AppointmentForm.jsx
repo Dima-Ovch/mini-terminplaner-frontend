@@ -25,7 +25,7 @@ export default function AppointmentForm({ onCreate }) {
   }
 
   return (
-    <form className="card p-4 w-96 bg-base-100 shadow" onSubmit={submit}>
+    <form className="card p-4 w-120 bg-base-100 shadow" onSubmit={submit}>
       <h2 className="card-title">Neuen Termin erstellen</h2>
 
       <input
