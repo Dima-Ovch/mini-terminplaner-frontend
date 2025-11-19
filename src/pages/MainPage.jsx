@@ -57,10 +57,10 @@ function MainPage() {
 
   return (
     <div>
-      <div className="flex flex-col gap-4 mb-4">
+      <div className="mx-auto w-full max-w-3xl flex flex-col gap-6 mb-6 items-center">
         <AppointmentForm onCreate={handleCreate} />
 
-        <div className="card p-4 bg-base-100 shadow mx-auto max-w-md">
+        <div className="card p-4 bg-base-100 shadow mx-auto max-w-md w-full">
           <label className="flex items-center gap-2">
             <input 
               type="checkbox" 
@@ -97,15 +97,17 @@ function MainPage() {
         </div>
       </div>
 
-      {loading ? (
-        <div>Lädt…</div>
-      ) : (
-        <AppointmentList 
-          items={filteredAppointments} 
-          onDelete={handleDelete} 
-          onEdit={handleEdit} 
-        />
-      )}
+      <div className="w-full">
+        {loading ? (
+          <div className="text-center py-8">Lädt…</div>
+        ) : (
+          <AppointmentList
+            items={filteredAppointments}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+          />
+        )}
+      </div>
 
       {searchModalOpen && (
         <div className="modal modal-open">
