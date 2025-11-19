@@ -57,10 +57,10 @@ function MainPage() {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row gap-4 mb-4">
+      <div className="flex flex-col gap-4 mb-4">
         <AppointmentForm onCreate={handleCreate} />
 
-        <div>
+        <div className="card p-4 bg-base-100 shadow mx-auto max-w-md">
           <label className="flex items-center gap-2">
             <input 
               type="checkbox" 
@@ -80,7 +80,7 @@ function MainPage() {
               placeholder="Suche nach Titel"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className="input input-bordered ml-2"
+              className="input input-bordered flex-1 min-w-[180px]"
             />
             
             {searchTerm && (

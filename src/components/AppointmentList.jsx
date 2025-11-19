@@ -19,10 +19,10 @@ export default function AppointmentList({ items = [], onDelete, onEdit }) {
             </p>
 
             <div className="card-actions justify-end mt-2">
-              <button className="btn btn-ghost" onClick={() => onEdit(it)}>
+              <button className="btn btn-dash btn-warning" onClick={() => onEdit(it)}>
                 Bearbeiten
               </button>
-              <button className="btn btn-error" onClick={() => onDelete(it._id)}>
+              <button className="btn btn-dash btn-error" onClick={() => onDelete(it._id)}>
                 Löschen
               </button>
             </div>
