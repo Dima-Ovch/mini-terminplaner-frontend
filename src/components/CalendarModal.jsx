@@ -79,7 +79,7 @@ export default function Calendar({ appointments = [] }) {
             <button
               key={cell.key + idx}
               className={
-                `h-20 p-2 text-left border rounded flex flex-col justify-between ${has ? 'bg-yellow-50' : 'bg-white'}`
+                `h-20 p-2 text-left border rounded flex flex-col justify-between ${has ? 'bg-yellow-50' : 'bg-gray'}`
               }
               onClick={() => handleDayClick(cell)}
             >
@@ -111,8 +111,8 @@ export default function Calendar({ appointments = [] }) {
                     {a.description && <div className="text-sm text-gray-500 truncate">{a.description}</div>}
                   </div>
                   <div className="flex gap-2">
-                    <button className="btn btn-sm" onClick={() => { setDetailAppointment(a); setListModalOpen(false); }}>Anzeigen</button>
-                    <button className="btn btn-sm btn-ghost" onClick={() => setListModalOpen(false)}>Schließen</button>
+                    {/* <button className="btn btn-sm" onClick={() => { setDetailAppointment(a); setListModalOpen(false); }}>Anzeigen</button>
+                    <button className="btn btn-sm btn-ghost" onClick={() => setListModalOpen(false)}>Schließen</button> */}
                   </div>
                 </div>
               ))}
