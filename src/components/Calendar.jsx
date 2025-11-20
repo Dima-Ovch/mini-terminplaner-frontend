@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import CalendarModal from './CalendarModal'
+import { Link } from 'react-router-dom'
 import { AppointmentsContext } from '../contexts/AppointmentsContext'
 
 const formatDateKey = (d) => {
@@ -72,6 +73,8 @@ export default function Calendar({ appointments: propAppointments = null }) {
 
   return (
     <div>
+      <h2 className='text-2xl font-bold mb-4'>Kalender</h2>
+      <Link to="/" className="btn btn-outline mb-4">Zurück zur Hauptseite</Link>
       <div className="card p-4 bg-base-100 shadow-lg rounded-box">
         <calendar-date ref={calRef} class="cally bg-base-100 border border-base-300 shadow-lg rounded-box" style={{ width: '100%' }}>
           <svg aria-label="Previous" slot="previous" class="fill-current size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M15.75 19.5 8.25 12l7.5-7.5"></path></svg>
