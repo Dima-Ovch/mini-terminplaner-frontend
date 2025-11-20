@@ -1,59 +1,56 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useMemo, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { getAppointments, createAppointment, updateAppointment, deleteAppointment } from '../api'
 import AppointmentList from '../components/AppointmentList'
 import AppointmentForm from '../components/AppointmentForm'
 import EditModal from '../components/EditModal'
+import { AppointmentsContext } from '../contexts/AppointmentsContext'
 
 function MainPage() {
-  const [appointments, setAppointments] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [editing, setEditing] = useState(null)
-  const [futureOnly, setFutureOnly] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchModalOpen, setSearchModalOpen] = useState(false)
+  const {
+    appointments,
+    loading,
+    loadAppointments,
+    createAppointment,
+    updateAppointment,
+    deleteAppointment
+  } = useContext(AppointmentsContext)
 
-  const load = async () => {
-    setLoading(true)
-    const data = await getAppointments(futureOnly)
-    setAppointments(data)
-    setLoading(false)
-  }
+  const [editing, setEditing] = React.useState(null)
+  const [futureOnly, setFutureOnly] = React.useState(false)
+  const [searchTerm, setSearchTerm] = React.useState('')
+  const [searchModalOpen, setSearchModalOpen] = React.useState(false)
 
-  useEffect(() => { load() }, [futureOnly])
+  useEffect(() => { loadAppointments(futureOnly) }, [futureOnly])
 
-  const handleCreate = async (payload) => { 
+  const handleCreate = async (payload) => {
     await createAppointment(payload)
-    load()
   }
 
-  const handleDelete = async (id) => { 
+  const handleDelete = async (id) => {
     await deleteAppointment(id)
-    load()
   }
 
   const handleEdit = (item) => setEditing(item)
 
-  const handleUpdate = async (id, payload) => { 
+  const handleUpdate = async (id, payload) => {
     await updateAppointment(id, payload)
     setEditing(null)
-    load()
   }
 
   const filteredAppointments = useMemo(
-    () => appointments.filter(a =>
-    a.title?.toLowerCase().includes(searchTerm.trim().toLowerCase())
+    () => (appointments || []).filter(a =>
+      a.title?.toLowerCase().includes(searchTerm.trim().toLowerCase())
     ),
     [appointments, searchTerm]
   )
 
-    useEffect(() => {
-      if (searchTerm.trim() !== '' && filteredAppointments.length > 0) {
-        setSearchModalOpen(true)
-      } else {
-        setSearchModalOpen(false)
-      }
-    }, [searchTerm, filteredAppointments])
+  useEffect(() => {
+    if (searchTerm.trim() !== '' && filteredAppointments.length > 0) {
+      setSearchModalOpen(true)
+    } else {
+      setSearchModalOpen(false)
+    }
+  }, [searchTerm, filteredAppointments])
 
   return (
     <div>
@@ -70,11 +67,11 @@ function MainPage() {
             />
             Nur zukünftige Termine
           </label>
+          <button className="btn" onClick={() => loadAppointments(futureOnly)}>Aktualisieren</button>
+          <Link to="/tabelle" className="btn btn-outline">Zur Tabelle</Link>
+          <Link to="/kalender" className="btn btn-outline">Zum Kalender</Link>
 
           <div className="mt-2 flex items-wrap items-center gap-2">
-            <button className="btn" onClick={load}>Aktualisieren</button>
-            <Link to="/tabelle" className="btn btn-outline">Zur Tabelle</Link>
-
             <input
               type="search"
               placeholder="Suche nach Titel"
@@ -82,7 +79,6 @@ function MainPage() {
               onChange={e => setSearchTerm(e.target.value)}
               className="input input-bordered flex-1 min-w-[180px]"
             />
-            
             {searchTerm && (
               <button
                 className="btn btn-sm btn-ghost"
@@ -92,7 +88,6 @@ function MainPage() {
                 Löschen
               </button>
             )}
-
           </div>
         </div>
       </div>
@@ -161,4 +156,4 @@ function MainPage() {
   )
 }
 
-export default MainPage;
+export default MainPage

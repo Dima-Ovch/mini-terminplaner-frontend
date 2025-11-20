@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { getAppointments } from '../api'
+import { AppointmentsContext } from '../contexts/AppointmentsContext'
 
 function Tabelle() {
-  const [appointments, setAppointments] = useState([])
-  const [loading, setLoading] = useState(true)
+  const { appointments = [], loading = false, loadAppointments } = useContext(AppointmentsContext)
 
   useEffect(() => {
-    async function load() {
-      setLoading(true)
-      const data = await getAppointments()
-      setAppointments(data)
-      setLoading(false)
-    }
-    load()
-  }, [])
+    if (typeof loadAppointments === 'function') loadAppointments()
+  }, [loadAppointments])
 
   return (
     <div className="overflow-x-auto">
