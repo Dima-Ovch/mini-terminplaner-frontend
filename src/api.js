@@ -1,3 +1,4 @@
+
 export const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:4000/api'
 
 async function safeFetch(url, options) {
@@ -12,11 +13,11 @@ async function safeFetch(url, options) {
 }
 
 export async function getAppointments(futureOnly = false) {
-  const q = futureOnly ? '?futureOnly=1' : ''
+  const q = futureOnly ? '?future=true' : ''
   const url = `${API_BASE}/appointments${q}`
   try {
     return await safeFetch(url)
-  } catch (e) {
+  } catch {
     // Rückfall: leere Liste statt uncaught error
     return []
   }
@@ -29,7 +30,7 @@ export async function createAppointment(payload) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
-  } catch (e) {
+  } catch {
     return null
   }
 }
@@ -41,7 +42,7 @@ export async function updateAppointment(id, payload) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
-  } catch (e) {
+  } catch {
     return null
   }
 }
@@ -50,7 +51,15 @@ export async function deleteAppointment(id) {
   try {
     await fetch(`${API_BASE}/appointments/${id}`, { method: 'DELETE' })
     return true
-  } catch (e) {
+  } catch {
     return false
+  }
+}
+
+export async function getAppointmentsByDate(date) {
+  try {
+    return await safeFetch(`${API_BASE}/appointments/date/${date}`)
+  } catch {
+    return []
   }
 }

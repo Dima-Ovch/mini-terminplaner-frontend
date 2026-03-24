@@ -8,7 +8,6 @@ export function AppointmentsProvider({ children }) {
   const [loading, setLoading] = useState(false)
   const [futureOnly, setFutureOnly] = useState(false)
 
-  const futureOnlyRef = useRef(false)
   const inProgressRef = useRef(false)
 
   const loadAppointments = useCallback(async () => {
@@ -16,7 +15,7 @@ export function AppointmentsProvider({ children }) {
     inProgressRef.current = true
     setLoading(true)
     try {
-      const data = await getAppointments(futureOnlyRef.current)
+      const data = await getAppointments(futureOnly)
       setAppointments(Array.isArray(data) ? data : [])
     } catch (err) {
       console.error('loadAppointments failed', err)
@@ -25,11 +24,10 @@ export function AppointmentsProvider({ children }) {
       setLoading(false)
       inProgressRef.current = false
     }
-  }, [])
+  }, [futureOnly])
 
   // FutureOnly-Filter überwachen
   useEffect(() => {
-    futureOnlyRef.current = futureOnly
     loadAppointments()
   }, [futureOnly, loadAppointments])
 

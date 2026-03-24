@@ -9,6 +9,8 @@ function MainPage() {
   const {
     appointments,
     loading,
+    futureOnly,
+    setFutureOnly,
     loadAppointments,
     createAppointment,
     updateAppointment,
@@ -16,11 +18,8 @@ function MainPage() {
   } = useContext(AppointmentsContext)
 
   const [editing, setEditing] = React.useState(null)
-  const [futureOnly, setFutureOnly] = React.useState(false)
   const [searchTerm, setSearchTerm] = React.useState('')
   const [searchModalOpen, setSearchModalOpen] = React.useState(false)
-
-  useEffect(() => { loadAppointments(futureOnly) }, [futureOnly])
 
   const handleCreate = async (payload) => {
     await createAppointment(payload)
@@ -67,7 +66,6 @@ function MainPage() {
             />
             Nur zukünftige Termine
           </label>
-          <button className="btn" onClick={() => loadAppointments(futureOnly)}>Aktualisieren</button>
           <Link to="/tabelle" className="btn btn-outline">Zur Tabelle</Link>
           <Link to="/kalender" className="btn btn-outline">Zum Kalender</Link>
 
