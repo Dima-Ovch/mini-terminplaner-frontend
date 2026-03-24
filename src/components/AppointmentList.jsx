@@ -1,6 +1,10 @@
 import React from 'react'
+import ReminderModal from './ReminderModal'
 
 export default function AppointmentList({ items = [], onDelete, onEdit }) {
+  const [reminderModalOpen, setReminderModalOpen] = React.useState(false)
+  const [selectedAppointment, setSelectedAppointment] = React.useState(null)
+
   if (items.length === 0) return <div className="mx-auto w-full max-w-md text-center">Keine Termine</div>
 
   return (
@@ -25,10 +29,20 @@ export default function AppointmentList({ items = [], onDelete, onEdit }) {
               <button className="btn btn-dash btn-error btn-md flex-1" onClick={() => onDelete(it._id)}>
                 Löschen
               </button>
+              <button className="btn btn-dash btn-info btn-md flex-1" onClick={() => { setSelectedAppointment(it); setReminderModalOpen(true); }}>
+                Erinnerungen
+              </button>
             </div>
           </div>
         </div>
       ))}
+
+      {reminderModalOpen && selectedAppointment && (
+        <ReminderModal
+          appointment={selectedAppointment}
+          onClose={() => setReminderModalOpen(false)}
+        />
+      )}
     </div>
   )
 }
